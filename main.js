@@ -28,23 +28,56 @@ class Particle {
             let dy = other.pos.y - this.pos.y;
             let distance = Math.sqrt(dx * dx + dy * dy);
             return distance;
-        }
+        };
         // create vector
         function createVector(x, y) {
             return {
                 x: x,
                 y: y
             };
-        }
+        };
         //add vectors
         function add(a, b) {
-            a.x += b.x;
-            a.y += b.y;
+            x = a.x + b.x;
+            y = a.y + b.y;
+            return {
+                x: x,
+                y: y
+            };
+        };
+
+        //add vectors
+        function sub(a, b) {
+            x = a.x - b.x;
+            y = a.y - b.y;
+            return {
+                x: x,
+                y: y
+            };
+        };
+        
+        function norm(vect , scaler){
+            return {
+                x: vect.pos.x/scaler,
+                y: vect.pos.y/scaler
+            };
+        }
+        
+        
+        
+        function setMag(vector1, vector2){
+            let dista = vector1.distance(vector2);
+            let dx = vector2.pos.x - vector1.pos.x;
+            let dy = vector2.pos.y - vector1.pos.y;
+            let netVector = {
+                x : dx/dista,
+                y : dy/dista
+            };
         }
 
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
-        this.acc = createVector(0, .31);
+        //this.acc = createVector(0, .31);
 
         this.draw = function() {
             ctx.beginPath();
@@ -53,13 +86,17 @@ class Particle {
             ctx.closePath();
             ctx.fill();
         };
-
+        
         this.update = function() {
             //clac the dist b/w mouse and each particles
-            add(this.pos, this.vel);
-            add(this.vel,this.acc);
+            this.mouse = createVector(mouse.x, mouse.y);
+            this.acc = sub(this.mouse, this.pos);
+            this.normAcc = norm(this,acc, this.mouse.distance(this.acc));
+            this.vel = add(this.vel, this.normAcc);
+            //this.pos = add(this.pos, this.vel);
             this.setBoundry();
-        }
+            //this.setInvertBoundry();
+        };
         //set bounderies
         this.setBoundry = function() {
             if (this.pos.x >= innerWidth - this.radius) {
@@ -78,7 +115,21 @@ class Particle {
                 this.pos.y = this.radius;
                 this.vel.y *= -1;
             }
-        }
+        };
+        this.setInvertBoundry = function() {
+            if (this.pos.x > innerWidth - this.radius) {
+                this.pos.x = 1;
+            }
+            if (this.pos.x < this.radius) {
+                this.pos.x = innerWidth;
+            }
+            if (this.pos.y > innerHeight - this.radius) {
+                this.pos.y = 1;
+            }
+            if (this.pos.y < this.radius) {
+                this.pos.y = innerHeight;
+            }
+        };
     }
 }
 
@@ -97,6 +148,7 @@ function animate() {
     p.draw();
     p.update();
 }
+
 animate();
 
 //
