@@ -94,7 +94,7 @@ class Particle {
             this.normAcc = norm(this,acc, this.mouse.distance(this.acc));
             this.vel = add(this.vel, this.normAcc);
             //this.pos = add(this.pos, this.vel);
-            this.setBoundry();
+            this.setBoundry(); 
             //this.setInvertBoundry();
         };
         //set bounderies
