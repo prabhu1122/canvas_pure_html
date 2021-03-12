@@ -5,7 +5,7 @@
 ![NPM Twitter](https://img.shields.io/twitter/follow/Prabhat84684469?color=blue&label=Follow&logo=twitter&style=plastic)
 
 # Widgets
-## Table of contents
+## Table of Contents
 * [General Info](#general-info)
 * [Technologies](#technologies)
 * [How to get](#how-to-get)
