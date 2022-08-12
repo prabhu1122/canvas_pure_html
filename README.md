@@ -21,3 +21,5 @@ This project is created with:
 
 ## How to get
 Just download zip file of it and use in your code
+Or just clone 
+https://github.com/prabhu1122/canvas_pure_html
