@@ -59,7 +59,7 @@ export class Particle {
 
     this.pos = createVector(innerWidth/2, innerHeight/2);
     this.vel = createVector(0, 0);
-    this.acc = createVector(0, 0.1);
+    //this.acc = createVector(0, 0.1);
 
     this.draw = function(ctx) {
       ctx.beginPath();
@@ -72,12 +72,13 @@ export class Particle {
     this.update = function() {
 
       //clac the dist b/w mouse and each particles
-      /*this.mouse = createVector(mouse.x, mouse.y);
+      this.mouse = createVector(mouse.x, mouse.y);
       this.acc = sub(this.mouse, this.pos);
-      */
+      
       this.acc = norm(this.acc);
       this.acc = setMag(this.acc, .1);
       this.vel = add(this.vel, this.acc);
+      //this.vel.math.add(this.acc);
       //this.vel = setMag(this.vel, 1);
       this.pos = add(this.pos, this.vel);
 
