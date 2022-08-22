@@ -57,7 +57,7 @@ export class Particle {
       };
     }
 
-    this.pos = createVector(innerWidth/2, innerHeight/2);
+    this.pos = createVector(x, y);
     this.vel = createVector(0, 0);
     //this.acc = createVector(0, 0.1);
 
@@ -76,13 +76,13 @@ export class Particle {
       this.acc = sub(this.mouse, this.pos);
       
       this.acc = norm(this.acc);
-      this.acc = setMag(this.acc, .1);
+      this.acc = setMag(this.acc, .23);
       this.vel = add(this.vel, this.acc);
       //this.vel.math.add(this.acc);
-      //this.vel = setMag(this.vel, 1);
+      this.vel = setMag(this.vel, .999);
       this.pos = add(this.pos, this.vel);
 
-      this.setBoundry();
+      //this.setBoundry();
       //this.setInvertBoundry();
     };
 

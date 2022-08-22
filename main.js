@@ -11,7 +11,7 @@ let particles = [];
 //this function call the function many time which we call inside this
 function init() {
   //loop function
-  for (var i = 0; i < 1; i++) {
+  for (var i = 0; i < 10; i++) {
     particles.push(new Particle(Math.random() * width, Math.random() * height));
   }
 }
