@@ -76,10 +76,10 @@ export class Particle {
       this.acc = sub(this.mouse, this.pos);
       
       this.acc = norm(this.acc);
-      this.acc = setMag(this.acc, .23);
+      this.acc = setMag(this.acc, .05);
       this.vel = add(this.vel, this.acc);
       //this.vel.math.add(this.acc);
-      this.vel = setMag(this.vel, .999);
+      //this.vel = setMag(this.vel, .999);
       this.pos = add(this.pos, this.vel);
 
       //this.setBoundry();
