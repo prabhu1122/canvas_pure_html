@@ -3,88 +3,52 @@ import { Maths } from './maths.js';
 
 //particles class
 export class Particle {
-  constructor(x, y) {
+  constructor(x, y, radius, color) {
     let math = new Maths();
-    this.radius = 5;
-    this.density = (Math.random() * 20) + 5; //create random no '0 to 30
-    this.distance = function(other) {
-      // body...
-      let dx = other.pos.x - this.pos.x;
-      let dy = other.pos.y - this.pos.y;
-      let distance = Math.sqrt(dx * dx + dy * dy);
-      return distance;
-    };
-    
-    function createVector(a,b) {
-      return {
-        x: a,
-        y: b
-      };
-    }
+    this.radius = radius;
+    this.color = color;
 
-    //add vectors
-    function add(a, b) {
-      x = a.x + b.x;
-      y = a.y + b.y;
-      return {
-        x: x,
-        y: y
-      };
-    };
-
-    //add vectors
-    function sub(a, b) {
-      x = a.x - b.x;
-      y = a.y - b.y;
-      return {
-        x: x,
-        y: y
-      };
-    };
-
-    function norm(vect) {
-      let scaler = Math.sqrt(vect.x * vect.x + vect.y * vect.y);
-      return {
-        x: vect.x / scaler,
-        y: vect.y / scaler
-      };
-    }
-
-    function setMag(vector, num) {
-      return {
-        x: vector.x * num,
-        y: vector.y * num
-      };
-    }
-
-    this.pos = createVector(x, y);
-    this.vel = createVector(0, 0);
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    this.pos = math.createVector(x, y);
+    this.vel = math.createVector(0, 0);
     //this.acc = createVector(0, 0.1);
-
+    //draw the Circle ⭕⭕⭕⭕
     this.draw = function(ctx) {
+      //console.log(color);
       ctx.beginPath();
-      ctx.fillStyle = 'rgba(255, 0, 255)';
+      ctx.strokeStyle = 'black';
+      ctx.fillStyle = "hsl(" + this.color + ",100%,50%)";
       ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2);
       ctx.closePath();
+      ctx.stroke();
       ctx.fill();
     };
 
+    //draw the lines between each point
+    this.lineDraw = function(ctx, other) {
+      ctx.beginPath();
+      ctx.strokeStyle = "blue";
+      ctx.lineWidth = .15;
+      ctx.moveTo(this.pos.x, this.pos.y);
+      ctx.lineTo(other.pos.x, other.pos.y);
+      ctx.stroke();
+    }
+    //update function 60 frame per sec
     this.update = function() {
-
       //clac the dist b/w mouse and each particles
-      this.mouse = createVector(mouse.x, mouse.y);
-      this.acc = sub(this.mouse, this.pos);
-      
-      this.acc = norm(this.acc);
-      this.acc = setMag(this.acc, .05);
-      this.vel = add(this.vel, this.acc);
-      //this.vel.math.add(this.acc);
-      //this.vel = setMag(this.vel, .999);
-      this.pos = add(this.pos, this.vel);
+      this.mouse = math.createVector(mouse.x, mouse.y);
+      this.acc = math.sub(this.mouse, this.pos);
 
-      //this.setBoundry();
-      //this.setInvertBoundry();
+      this.acc = math.norm(this.acc);
+      this.acc = math.setMag(this.acc, .03);
+      this.vel = math.add(this.vel, this.acc);
+      //this.vel = math.setMag(this.vel, 1);
+      this.pos = math.add(this.pos, this.vel);
+
+      this.setBoundry();
+      this.setInvertBoundry();
     };
+
 
     //set bounderies
     this.setBoundry = function() {
@@ -107,7 +71,7 @@ export class Particle {
     };
     this.setInvertBoundry = function() {
       if (this.pos.x > innerWidth - this.radius) {
-        this.pos.x = 1;
+        this.pos.x = 0;
       }
       if (this.pos.x < this.radius) {
         this.pos.x = innerWidth;
@@ -126,19 +90,16 @@ export class Particle {
 const mouse = {
   x: null,
   y: null,
-  //radius: 100
 }
 
 window.addEventListener('touchmove', function(event) {
   //body...
   mouse.x = event.touches[0].clientX;
   mouse.y = event.touches[0].clientY;
-  //mouse.radius = 100;
 });
 
 window.addEventListener('mousemove', function(event) {
   //body...
   mouse.x = event.clientX;
   mouse.y = event.clientY;
-  //mouse.radius = 100;
 });

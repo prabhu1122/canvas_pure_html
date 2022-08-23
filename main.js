@@ -12,7 +12,7 @@ let particles = [];
 function init() {
   //loop function
   for (var i = 0; i < 10; i++) {
-    particles.push(new Particle(Math.random() * width, Math.random() * height));
+    particles.push(new Particle(Math.random() * width, Math.random() * height, 3, Math.random() * 256));
   }
 }
 
@@ -20,9 +20,12 @@ function animate() {
   //render function
   ctx.clearRect(0, 0, width, height);
   requestAnimationFrame(animate);
-  particles.forEach((particle) => {
+  particles.forEach((particle, index_1) => {
     particle.draw(ctx);
     particle.update();
+    particles.forEach((otherParticles, index_2) => {
+      particle.lineDraw(ctx, otherParticles);
+    });
   });
 }
 
