@@ -7,12 +7,14 @@ const height = canvas.height = window.innerHeight;
 //handel mouse
 
 let p;
+let color;
 let particles = [];
 //this function call the function many time which we call inside this
 function init() {
   //loop function
-  for (var i = 0; i < 10; i++) {
-    particles.push(new Particle(Math.random() * width, Math.random() * height, 3, Math.random() * 256));
+  for (var i = 0; i < 1; i++) {
+    color = Math.random() * 256;
+    particles.push(new Particle(width / 2, height / 2, 8, color));
   }
 }
 
@@ -23,9 +25,6 @@ function animate() {
   particles.forEach((particle, index_1) => {
     particle.draw(ctx);
     particle.update();
-    particles.forEach((otherParticles, index_2) => {
-      particle.lineDraw(ctx, otherParticles);
-    });
   });
 }
 

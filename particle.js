@@ -11,10 +11,9 @@ export class Particle {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     this.pos = math.createVector(x, y);
     this.vel = math.createVector(0, 0);
-    //this.acc = createVector(0, 0.1);
+    this.acc = math.createVector(0, 0.1);
     //draw the Circle ⭕⭕⭕⭕
     this.draw = function(ctx) {
-      //console.log(color);
       ctx.beginPath();
       ctx.strokeStyle = 'black';
       ctx.fillStyle = "hsl(" + this.color + ",100%,50%)";
@@ -24,21 +23,11 @@ export class Particle {
       ctx.fill();
     };
 
-    //draw the lines between each point
-    this.lineDraw = function(ctx, other) {
-      ctx.beginPath();
-      ctx.strokeStyle = "blue";
-      ctx.lineWidth = .15;
-      ctx.moveTo(this.pos.x, this.pos.y);
-      ctx.lineTo(other.pos.x, other.pos.y);
-      ctx.stroke();
-    }
     //update function 60 frame per sec
     this.update = function() {
       //clac the dist b/w mouse and each particles
-      this.mouse = math.createVector(mouse.x, mouse.y);
-      this.acc = math.sub(this.mouse, this.pos);
-
+      //this.mouse = math.createVector(mouse.x, mouse.y);
+      //this.acc = math.sub(this.mouse, this.pos);
       this.acc = math.norm(this.acc);
       this.acc = math.setMag(this.acc, .03);
       this.vel = math.add(this.vel, this.acc);
